@@ -1,0 +1,17 @@
+Title: Nifty Sniper Knowledge Base
+Category: Financial Markets
+Includes: NSE, BSE, Crypto, Global Markets, Indicators, Patterns
+Usage: Real-time intraday prediction support for Nifty Sniper 🔱
+----------------------------------------
+1. Market opens at 9:15 AM IST and closes at 3:30 PM IST.
+2. Nifty 50 is India's benchmark index and includes top 50 companies.
+3. Key Indicators: RSI, MACD, VWAP, SuperTrend, Bollinger Bands.
+4. Timeframes used: 5 min, 15 min, 1 hour for intraday trading.
+5. Candle patterns: Doji, Engulfing, Hammer, Shooting Star.
+6. Avoid trading in sideways markets. Use volume confirmation.
+7. Keep stoploss tight. Use trailing SL after target 1.
+8. Pre-market insights impact initial volatility.
+9. Global indices (Dow, Nasdaq) influence Indian market sentiment.
+10. Always follow a fixed trading plan with entry/exit strategy.
+----------------------------------------
+Update this file as your Nifty Sniper 🔱 evolves with more strategies, setups, learnings.

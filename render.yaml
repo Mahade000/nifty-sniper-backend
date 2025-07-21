@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: nifty-sniper-bot
+    env: python
+    buildCommand: ""
+    startCommand: "python app.py"
+    plan: free

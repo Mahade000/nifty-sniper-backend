@@ -1,0 +1,4 @@
+flask
+pandas
+openai
+tradingview_ta
