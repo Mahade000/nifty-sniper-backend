@@ -10,3 +10,5 @@ This is an advanced intraday trading assistant powered by Codex & GPT. It analyz
 - Google Sheets integration (optional)
 
 Made with ❤️ to protect retail traders from market dhoka.
+## Deployment
+Run `./deploy_left.sh` to start the server locally using Gunicorn.
