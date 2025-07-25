@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
 import os
+from tradingview_script import analyze_market
 
 app = Flask(__name__)
 
