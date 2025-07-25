@@ -82,7 +82,7 @@ def get_live_price():
     }
     return jsonify(result) if price else jsonify({"error": "Could not fetch price"}), 200 if price else 400
 
-@app.route('/getTradeSignal', methods=['GET'])
+@app.route('/get-trade-signal', methods=['GET'])
 def get_trade_signal():
     symbol = request.args.get('symbol', 'NIFTY50')
     market = request.args.get('market', 'IN')
