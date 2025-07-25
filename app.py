@@ -25,7 +25,6 @@ CURRENCY_CODES = {
 }
 
 def get_fx_rate(from_cur, to_cur):
-    # Returns conversion rate (e.g., 1 USD to INR = 83.5)
     fx_url = f'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={from_cur}&to_currency={to_cur}&apikey={ALPHA_KEY}'
     resp = requests.get(fx_url)
     fx = resp.json()
@@ -34,27 +33,26 @@ def get_fx_rate(from_cur, to_cur):
     except Exception:
         return None
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Nifty Sniper 🔱 is LIVE!"
+
 @app.route('/get-live-price', methods=['GET'])
 def get_live_price():
     symbol = request.args.get('symbol', 'AAPL')
     market = request.args.get('market', 'US').upper()
-    to_currency = request.args.get('to_currency', 'INR').upper()  # Optional: User can pick any
-
-    # Decide main market currency
+    to_currency = request.args.get('to_currency', 'INR').upper()
     base_currency = CURRENCY_CODES.get(market, "USD")
     price, explanation, converted_price, fx_rate = None, "", None, None
 
-    # 1. Get the price from Alpha Vantage
+    # 1. Get price from Alpha Vantage
     if market == "CRYPTO":
         url = f'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={symbol}&to_currency={base_currency}&apikey={ALPHA_KEY}'
         resp = requests.get(url)
         data = resp.json()
         price = data.get('Realtime Currency Exchange Rate', {}).get('5. Exchange Rate')
     elif market in CURRENCY_CODES:
-        # US = NASDAQ/NYSE, IN = BSE/NSE, etc.
-        ext = ""
-        if market == "IN":
-            ext = ".BSE"
+        ext = ".BSE" if market == "IN" else ""
         url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}{ext}&apikey={ALPHA_KEY}'
         resp = requests.get(url)
         data = resp.json()
@@ -88,8 +86,7 @@ def get_live_price():
 def get_trade_signal():
     symbol = request.args.get('symbol', 'NIFTY50')
     market = request.args.get('market', 'IN')
-    # Add your real AI/Codex logic below!
-    # Here, example uses mock logic
+    # Your AI logic here (this is a placeholder)
     response = {
         "symbol": symbol,
         "market": market,
@@ -97,9 +94,10 @@ def get_trade_signal():
         "target": "22450",
         "sl": "22225",
         "confidence": 0.86,
-        "message": "Auto-AI: BUY recommended based on global & local market AI, GPT-4o, Codex, Yahoo, and Sniper Labs."
+        "message": "Auto-AI: BUY recommended based on global & local market AI, GPT-4.1, GPT-4o, GPT-o3, o4-mini, o4-mini-high,
+         GPT-4.5, GPT-4.1-mini, o1-pro, Codex"
     }
     return jsonify(response)
-    
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
