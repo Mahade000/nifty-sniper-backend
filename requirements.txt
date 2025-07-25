@@ -3,3 +3,4 @@ gunicorn
 pandas
 openai
 tradingview_ta
+python-dotenv
