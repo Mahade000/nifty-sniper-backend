@@ -114,3 +114,20 @@ def get_trade_signal():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
+ from flask import Response
+
+@app.route("/privacy-policy")
+def privacy_policy():
+    return Response(
+        """
+        <html>
+          <head><title>Privacy Policy</title></head>
+          <body>
+            <h1>Privacy Policy</h1>
+            <p>This app does not store, track, or share your personal data. 
+            All trading data is processed in real time and not saved.</p>
+          </body>
+        </html>
+        """,
+        mimetype="text/html"
+    )
