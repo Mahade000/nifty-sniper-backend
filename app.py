@@ -82,11 +82,13 @@ def get_live_price():
         "explanation": explanation
     }
     return jsonify(result) if price else jsonify({"error": "Could not fetch price"}), 200 if price else 400
+    
+from tradingview_script import analyze_market
 
 @app.route('/get-trade-signal', methods=['GET'])
 def get_trade_signal():
     symbol = request.args.get('symbol', 'NIFTY50')
-market = request.args.get('market', 'IN')
+    market = request.args.get('market', 'IN')
     # Your AI logic here (this is a placeholder)
     response = {
         "symbol": symbol,
@@ -97,8 +99,16 @@ market = request.args.get('market', 'IN')
         "confidence": 0.86,
         "message": "Auto-AI: BUY recommended based on global & local market AI, GPT-4.1, GPT-4o, GPT-o3, o4-mini, o4-mini-high,
          GPT-4.5, GPT-4.1-mini, o1-pro, Codex"
-    }
-    return jsonify(response)
+        
+    try:
+        result = analyze_market(symbol, market)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({
+            "error": "TradingView analysis failed",
+            "details": str(e)
+        }), 500
+     return jsonify(response)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
