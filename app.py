@@ -85,7 +85,7 @@ def get_live_price():
 @app.route('/get-trade-signal', methods=['GET'])
 def get_trade_signal():
     symbol = request.args.get('symbol', 'NIFTY50')
-    market = request.args.get('market', 'IN')
+market = request.args.get('market', 'IN')
     # Your AI logic here (this is a placeholder)
     response = {
         "symbol": symbol,
