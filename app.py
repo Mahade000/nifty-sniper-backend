@@ -4,7 +4,8 @@ import os
 
 app = Flask(__name__)
 
-ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")  # put key in .env or Render secrets!
+# Safely load your API key from Fly.io secrets or Render environment
+ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
 
 @app.route('/')
 def home():
@@ -12,10 +13,13 @@ def home():
 
 @app.route('/get-live-price', methods=['GET'])
 def get_live_price():
-    symbol = request.args.get('symbol', 'AAPL')  # example: 'AAPL', 'RELIANCE.BSE', 'BTCUSD'
-    market = request.args.get('market', 'US')    # example: 'US', 'IN', 'CRYPTO'
+    symbol = request.args.get('symbol', 'AAPL')      # Example: AAPL, RELIANCE.BSE, BTCUSD
+    market = request.args.get('market', 'US')        # Example: US, IN, CRYPTO
 
-    # --- Pick endpoint per market type
+    if not ALPHA_VANTAGE_API_KEY:
+        return jsonify({"error": "API key not set on server"}), 500
+
+    # Pick API endpoint based on market type
     if market == 'US' or market == 'IN':
         url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={ALPHA_VANTAGE_API_KEY}'
         resp = requests.get(url)
@@ -42,4 +46,3 @@ def add_headers(response):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
-
