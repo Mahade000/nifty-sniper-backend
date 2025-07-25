@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import requests
 import os
 from tradingview_script import analyze_market
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 
