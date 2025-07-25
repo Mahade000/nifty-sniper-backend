@@ -26,16 +26,22 @@ CURRENCY_CODES = {
     "ZA": "ZAR",
     "CRYPTO": "USD"  # Default for crypto
 }
+@app.route('/get-fx-rate', methods=['GET'])
+def get_fx_rate():
+    from_cur = request.args.get('from')
+    to_cur = request.args.get('to')
 
-def get_fx_rate(from_cur, to_cur):
-    fx_url = f'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={from_cur}&to_currency={to_cur}&apikey={ALPHA_KEY}'
-    resp = requests.get(fx_url)
-    fx = resp.json()
+    fx_url = f"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={from_cur}&to_currency={to_cur}&apikey={ALPHA_KEY}"
     try:
-        return float(fx['Realtime Currency Exchange Rate']['5. Exchange Rate'])
-    except Exception:
-        return None
+        response = requests.get(fx_url)
+        data = response.json()
 
+        rate = float(data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+        explanation = f"Exchange rate from {from_cur} to {to_cur}"
+        return jsonify({"rate": rate, "explanation": explanation})
+
+    except Exception as e:
+        return jsonify({"error": "Failed to get exchange rate", "details": str(e)}), 500
 @app.route('/', methods=['GET'])
 def home():
     return "Nifty Sniper 🔱 is LIVE!"
