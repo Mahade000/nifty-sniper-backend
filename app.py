@@ -141,9 +141,9 @@ def privacy_policy():
 @app.route("/shiv-verses", methods=["GET"])
 def get_shiv_verses():
     try:
+        print("🔥 Shiv verses endpoint hit")
         return send_file("shiv_mahapuran_verses.txt", mimetype="text/plain")
     except Exception as e:
-        return {"error": str(e)}, 500
-
+        return jsonify({"error": str(e)}), 500
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
