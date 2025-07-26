@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask import send_file
 import requests
 import os
 from tradingview_script import analyze_market
@@ -120,22 +121,29 @@ def get_trade_signal():
             "fallback": fallback_response
         }), 200
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
- from flask import Response
+from flask import Response  # Move this to the top if not already
 
 @app.route("/privacy-policy")
 def privacy_policy():
     return Response(
         """
         <html>
-          <head><title>Privacy Policy</title></head>
-          <body>
-            <h1>Privacy Policy</h1>
-            <p>This app does not store, track, or share your personal data. 
-            All trading data is processed in real time and not saved.</p>
-          </body>
-        </html>
+        <head><title>Privacy Policy</title></head>
+        <body>
+        <h1>Privacy Policy</h1>
+        <p>This app does not store, track, or share your personal data.
+        All trading data is processed in real time and not saved.</p>
+        </body></html>
         """,
         mimetype="text/html"
     )
+
+@app.route("/shiv-verses", methods=["GET"])
+def get_shiv_verses():
+    try:
+        return send_file("shiv_mahapuran_verses.txt", mimetype="text/plain")
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
